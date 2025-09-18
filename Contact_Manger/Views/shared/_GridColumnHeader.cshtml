@@ -1,0 +1,21 @@
+﻿@if (ViewBag.SortBy == ViewBag.FieldName && ViewBag.SortOrder == "ASC")
+{
+	<th>
+		<a href="~/Person/index?searchField=@(ViewBag.SearchField)&searchString=@(ViewBag.searchString)&sortBy=@(ViewBag.FieldName)&sortOrder=DESC">@ViewBag.FieldName</a>
+		<i class="fa-solid fa-arrow-up-z-a"></i>
+	</th>
+}
+else if (ViewBag.SortBy == ViewBag.FieldName && ViewBag.SortOrder == "DESC")
+{
+	<th>
+		<a href="~/Person/index?searchField =@(ViewBag.SearchField)&searchString =@(ViewBag.searchString)&sortBy =@(ViewBag.FieldName)&sortOrder=ASC">@ViewBag.FieldName</a>
+		<i class="fa-solid fa-arrow-down-a-z"></i>
+	</th>
+}
+else
+{
+	<th>
+		<a href="~/Person/index?searchField=@(ViewBag.SearchField)&searchString=@(ViewBag.searchString)&sortBy=@(ViewBag.FieldName)&sortOrder=ASC">@ViewBag.FieldName</a>
+	</th>
+}
+)

@@ -22,7 +22,6 @@ namespace Services
             response.Country = _CountriesService.GetCountrybyId(person.CountryId)?.Name;
             return response;
         }
-
         public PersonService(bool initialize = true)
         {
             _people = new List<Person>();
@@ -84,9 +83,6 @@ namespace Services
                 });
             }
         }
-        
-
-
         public PersonResponse AddPerson(PersonAddRequest? personAddRequest)
         {
             ValidationHelper.ValidateObject(personAddRequest);
@@ -120,16 +116,23 @@ namespace Services
             }
             switch (searchBy)
             {
-                case nameof(Person.Name): filteredPeople = filteredPeople.Where(p => !string.IsNullOrEmpty(p.Name) && p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+                case nameof(PersonResponse.Name): filteredPeople = filteredPeople.Where(p => !string.IsNullOrEmpty(p.Name) && p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
                     break;
 
-                case nameof(Person.Email): filteredPeople = filteredPeople.Where(p => !string.IsNullOrEmpty(p.Email) && p.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+                case nameof(PersonResponse.Email): filteredPeople = filteredPeople.Where(p => !string.IsNullOrEmpty(p.Email) && p.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
                     break;
-                case nameof(Person.DateOfBirth): filteredPeople = filteredPeople.Where(p => p.DateOfBirth.HasValue && p.DateOfBirth.Value.ToString("yyyy-MM-dd").Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+                case nameof(PersonResponse.DateOfBirth): filteredPeople = filteredPeople.Where(p => p.DateOfBirth.HasValue && p.DateOfBirth.Value.ToString("yyyy-MM-dd").Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
                     break;
-                case nameof(Person.Gender):
-                    filteredPeople = filteredPeople.Where(p => !string.IsNullOrEmpty(p.Gender) && p.Gender.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+                case nameof(PersonResponse.Gender):
+                    filteredPeople = filteredPeople.Where(p => !string.IsNullOrEmpty(p.Gender) && p.Gender.Equals(searchString, StringComparison.InvariantCultureIgnoreCase)).ToList();
                     break;
+                case nameof(PersonResponse.Address):
+                    filteredPeople = filteredPeople.Where(p => !string.IsNullOrEmpty(p.Address) && p.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+                    break;
+                case nameof(PersonResponse.Country):
+                    filteredPeople = filteredPeople.Where(p => !string.IsNullOrEmpty(p.Country) && p.Country.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+                    break;
+
 
                 default: throw new ArgumentException("Invalid searchBy parameter.");
             }
@@ -166,7 +169,6 @@ namespace Services
                 _ => allPeople,
             };
         }
-
         public PersonResponse? UpdatePerson(PersonUpdateRequest? personUpdateRequest)
         {
             if(personUpdateRequest == null) throw new ArgumentNullException("PersonUpdateRequest is null");
