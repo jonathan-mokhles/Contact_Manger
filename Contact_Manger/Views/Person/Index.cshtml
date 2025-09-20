@@ -59,9 +59,8 @@
                         <td>@person.Gender</td>
                         <td>@person.ReceiveNewsLetters</td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@person.Id" class="btn btn-primary">Edit</a>
-                            <a asp-action="Details" asp-route-id="@person.Id" class="btn btn-info">Details</a>
-                            <a asp-action="Delete" asp-route-id="@person.Id" class="btn btn-danger">Delete</a>
+                            <a asp-controller="Person" asp-action="Edit" asp-route-personId="@person.Id">Edit</a>
+                            <a asp-controller="Person" asp-action="Delete" asp-route-personId="@person.Id">Delete</a>
                         </td>
                     </tr>
                 }

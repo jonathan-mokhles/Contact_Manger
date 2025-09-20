@@ -18,21 +18,35 @@ namespace ServicesContracts.DTO
         public string? Gender { get; set; }
         public Guid? CountryId { get; set; }
         public string? Country { get; set; }
-        public bool? ReceiveNewsLetters { get; set; }
+        public bool ReceiveNewsLetters { get; set; } = true;
 
         public override bool Equals(object? obj)
         {
 
             if (obj == null || obj.GetType() != typeof(PersonResponse)) return false;
-           
+
             PersonResponse person = (PersonResponse)obj;
 
             return (this.Id == person.Id && this.Name == person.Name && this.Email == person.Email && this.Address == person.Address && this.CountryId == person.CountryId && this.ReceiveNewsLetters == person.ReceiveNewsLetters && this.Gender == person.Gender && this.DateOfBirth == person.DateOfBirth);
 
 
         }
-    }
 
+        public PersonUpdateRequest toPersonUpdateRequest()
+        {
+            return new PersonUpdateRequest()
+            {
+                Id = this.Id,
+                Name = this.Name,
+                Email = this.Email,
+                Address = this.Address,
+                DateOfBirth = this.DateOfBirth,
+                CountryId = this.CountryId,
+                Gender = this.Gender == "Male" ? GenderOptions.Male : GenderOptions.Female,
+                ReceiveNewsLetters = this.ReceiveNewsLetters
+            };
+        }
+    }
     public static class PersonResponseExtension
     {
         public static PersonResponse toPersonResponse(this Person person)

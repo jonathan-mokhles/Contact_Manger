@@ -20,9 +20,9 @@ namespace ServicesContracts.DTO
         public string? Email { get; set; }
         public string? Address { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public Gender? Gender { get; set; }
+        public GenderOptions? Gender { get; set; }
         public Guid? CountryId { get; set; }
-        public bool? ReceiveNewsLetters { get; set; }
+        public bool ReceiveNewsLetters { get; set; } = true;
 
         public Person toPerson()
         {

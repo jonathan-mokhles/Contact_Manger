@@ -1,17 +1,18 @@
-﻿@model PersonAddRequest
-
-@{
-    ViewBag.Title = "Create Person";
+﻿@{
+	ViewBag.Title = "Edit Person";
 }
+@model PersonUpdateRequest
+
 
 <a class="link-hover" href="~/Person/index">Go Back to Persons List</a>
 
-<h1>Create Person</h1>
+<h1>Edit Person</h1>
 <div class="w-50">
-    <form action="~/Person/create" method="post">
+    <form asp-controller="Person" asp-action="Edit" method="post">
         @Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="text-red"></div>
 
+		<input type="hidden" asp-for="Id" />
         <div class="form-field flex">
             <div class="w-25">
                 <label asp-for="Name" class="form-label pt"></label>
@@ -95,7 +96,7 @@
             <div class="w-25">
             </div>
             <div class="flex-1">
-                <input type="submit" value="Create" class="button button-green-back" />
+                <input type="submit" value="Update" class="button button-green-back" />
             </div>
         </div>
 

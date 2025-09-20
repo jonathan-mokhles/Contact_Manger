@@ -37,7 +37,7 @@ namespace TestProject
                 Email = "jon@example.com",
                 DateOfBirth = new DateTime(2000, 10, 1),
                 Address = "123 Main",
-                Gender = Gender.Male,
+                Gender = GenderOptions.Male,
                 CountryId = countryResponse.Id,
             };
             personResponses.Add(_peopleServices.AddPerson(personAddRequest1));
@@ -47,7 +47,7 @@ namespace TestProject
                 Email = "jane@example.com",
                 DateOfBirth = new DateTime(2005, 9, 28),
                 Address = "123 Main",
-                Gender = Gender.Female,
+                Gender = GenderOptions.Female,
                 CountryId = countryResponse1.Id,
             };
             personResponses.Add(_peopleServices.AddPerson(personAddRequest2));
@@ -57,7 +57,7 @@ namespace TestProject
                 Email = "Adam@expamle.com",
                 DateOfBirth = new DateTime(1995, 5, 15),
                 Address = "123 Main",
-                Gender = Gender.Male,
+                Gender = GenderOptions.Male,
                 CountryId = countryResponse.Id,
                 ReceiveNewsLetters = true
 
@@ -96,7 +96,7 @@ namespace TestProject
                 Email = "jon@doe.com",
                 DateOfBirth = new DateTime(1990, 1, 1),
                 Address = "123 Main",
-                Gender = Gender.Male,
+                Gender = GenderOptions.Male,
                 ReceiveNewsLetters = true,
                 CountryId = Guid.NewGuid()
 
@@ -248,7 +248,7 @@ namespace TestProject
                 Email = "jon@update.com",
                 DateOfBirth = new DateTime(2011, 11, 11),
                 Address = "1234 Main",
-                Gender = Gender.Male,
+                Gender = GenderOptions.Male,
                 CountryId = people[0].CountryId
             };
 

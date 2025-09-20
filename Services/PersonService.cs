@@ -187,6 +187,10 @@ namespace Services
             existingPerson.CountryId = personUpdateRequest.CountryId;
             existingPerson.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
 
+            //DeletePerson(existingPerson.Id);
+            //_people.Add(existingPerson);
+
+
             return personToResponse(existingPerson);
 
         }

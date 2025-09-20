@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Services;
 using ServicesContracts;
 using ServicesContracts.DTO;
@@ -10,7 +11,7 @@ namespace Contact_Manger.Controllers
     [Route("person")]
     public class PersonController : Controller
     {
-        private readonly  IPeopleServices _PersonService;
+        private readonly IPeopleServices _PersonService;
         private readonly ICountriesService _CountriesService;
 
         public PersonController(IPeopleServices personService, ICountriesService countriesService)
@@ -52,7 +53,7 @@ namespace Contact_Manger.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Countries = _CountriesService.GetAllCountries();
+            ViewBag.Countries = _CountriesService.GetAllCountries().Select(temp => new SelectListItem { Text = temp.Name, Value = temp.Id.ToString() });
 
             return View();
         }
@@ -61,14 +62,72 @@ namespace Contact_Manger.Controllers
         [HttpPost]
         public IActionResult Create(PersonAddRequest addRequest)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 ViewBag.Countries = _CountriesService.GetAllCountries();
-                ViewBag.Errors = ModelState.Values.SelectMany(v=>v.Errors).Select(e=>e.ErrorMessage).ToList();
+                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
                 return View();
             }
             _PersonService.AddPerson(addRequest);
-            return RedirectToAction("Index","Person");
+            return RedirectToAction("Index", "Person");
+        }
+
+        [Route("edit/{personId}")]
+        [HttpGet]
+        public IActionResult Edit(Guid personId)
+        {
+            PersonResponse? person = _PersonService.GetPersonById(personId);
+            if (person == null)
+            {
+                return RedirectToAction("Index", "Person");
+            }
+            ViewBag.Countries = _CountriesService.GetAllCountries().Select(temp => new SelectListItem { Text = temp.Name, Value = temp.Id.ToString(), Selected = temp.Id == person.CountryId });
+
+            return View(person.toPersonUpdateRequest());
+        }
+
+        [Route("edit/{personId}")]
+        [HttpPost]
+        public IActionResult Edit(Guid personId, PersonUpdateRequest updateRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Countries = _CountriesService.GetAllCountries().Select(temp => new SelectListItem { Text = temp.Name, Value = temp.Id.ToString(), Selected = temp.Id == updateRequest.CountryId });
+                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return View();
+            }
+            PersonResponse? person = _PersonService.GetPersonById(personId);
+            if (person == null)
+            {
+                return RedirectToAction("Index", "Person");
+            }
+            _PersonService.UpdatePerson(updateRequest);
+            return RedirectToAction("Index", "Person");
+        }
+
+        [Route("delete/{personId}")]
+        [HttpGet]
+        public IActionResult Delete(Guid personId)
+        {
+            PersonResponse? person = _PersonService.GetPersonById(personId);
+            if (person == null)
+            {
+                return RedirectToAction("Index", "Person");
+            }
+            return View(person);
+        }
+
+        [Route("delete/{personId}")]
+        [HttpPost]
+        public IActionResult DeleteConfirmed(Guid personId)
+        {
+            PersonResponse? person = _PersonService.GetPersonById(personId);
+            if (person == null)
+            {
+                return RedirectToAction("Index", "Person");
+            }
+            _PersonService.DeletePerson(personId);
+            return RedirectToAction("Index", "Person");
         }
     }
 }

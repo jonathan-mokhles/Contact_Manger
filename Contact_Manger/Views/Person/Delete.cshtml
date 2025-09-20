@@ -1,0 +1,19 @@
+﻿@{
+	ViewBag.Title = "Delete Person";
+}
+@model PersonResponse
+
+<h1>Delete Person</h1>
+<h3>Are you sure you want to delete this?</h3>
+
+<form asp-controller="Person" asp-action="DeleteConfirmed" method="post">
+	<input type="hidden" asp-for="Id" />
+
+	<div class="form-group">
+		<label asp-for="Name" class="control-label"></label>
+		<input asp-for="Name" class="form-input" readonly />
+		<span asp-validation-for="Name" class="text-danger"></span>
+	</div>
+	<input type="submit" value="Delete" class="button button-red-back" />
+
+</form>
