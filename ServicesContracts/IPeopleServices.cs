@@ -16,14 +16,14 @@ namespace ServicesContracts
         /// <param name="personAddRequest">The details of the person to be added. This parameter can be null, in which case the operation will fail.</param>
         /// <returns>A <see cref="PersonResponse"/> object containing the details of the added person and the status of the
         /// operation.</returns>
-        public PersonResponse AddPerson(PersonAddRequest? personAddRequest);
+        public Task<PersonResponse> AddPerson(PersonAddRequest? personAddRequest);
 
         /// <summary>
         /// Retrieves a list of all people.
         /// </summary>
         /// <returns>A list of <see cref="PersonResponse"/> objects representing all people.  The list will be empty if no people
         /// are found.</returns>
-        public List<PersonResponse> GetAllPeople();
+        public Task<List<PersonResponse>> GetAllPeople();
 
         /// <summary>
         /// Retrieves a person's details based on their unique identifier.
@@ -33,7 +33,7 @@ namespace ServicesContracts
         /// <param name="id">The unique identifier of the person to retrieve. This parameter can be <see langword="null"/>.</param>
         /// <returns>A <see cref="PersonResponse"/> object containing the person's details if found; otherwise, <see
         ///langword="null"/>.</returns>
-        public PersonResponse? GetPersonById(Guid? id);
+        public Task<PersonResponse?> GetPersonById(Guid? id);
 
         /// <summary>
         /// Retrieves a list of people filtered based on the specified criteria.
@@ -44,7 +44,7 @@ namespace ServicesContracts
         /// <param name="searchString">The value to search for within the specified field. Cannot be null or empty.</param>
         /// <returns>A list of <see cref="PersonResponse"/> objects that match the specified filter criteria.  Returns an empty
         /// list if no matches are found.</returns>
-        public List<PersonResponse> GetFilteredpeople(string? searchBy,string searchString);
+        public Task<List<PersonResponse>> GetFilteredpeople(string? searchBy,string searchString);
 
         /// <summary>
         /// Retrieves a list of people filtered by the specified search criteria and sorted based on the given
@@ -59,7 +59,7 @@ namespace ServicesContracts
         /// ascending order or <see cref="SortOrderEnum.Descending"/> for descending order.</param>
         /// <returns>A list of <see cref="PersonResponse"/> objects that match the specified search criteria and are sorted as
         /// requested. If no results match the criteria, an empty list is returned.</returns>
-        public List<PersonResponse> GetSortedpeople(List<PersonResponse> allPeople, string sortBy, SortOrderEnum sortOreder);
+        public Task<List<PersonResponse>> GetSortedpeople(List<PersonResponse> allPeople, string sortBy, SortOrderEnum sortOreder);
 
         /// <summary>
         /// Updates the details of an existing person based on the provided update request.
@@ -68,9 +68,9 @@ namespace ServicesContracts
         /// include valid data for the update.</param>
         /// <returns>A <see cref="PersonResponse"/> object containing the updated details of the person,  or <see
         /// langword="null"/> if the update could not be performed.</returns>
-        public PersonResponse? UpdatePerson(PersonUpdateRequest? personUpdateRequest);
+        public Task<PersonResponse?> UpdatePerson(PersonUpdateRequest? personUpdateRequest);
 
 
-        public bool DeletePerson(Guid? id);
+        public Task<bool> DeletePerson(Guid? id);
     }
 }

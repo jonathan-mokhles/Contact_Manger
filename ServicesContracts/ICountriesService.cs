@@ -14,20 +14,20 @@ namespace ServicesContracts
         /// </summary>
         /// <param name="countryAddRequest"></param>
         /// <returns> country name with its id </returns>
-        CountryResponse AddCountry(CountryAddRequest? countryAddRequest);
+        Task<CountryResponse> AddCountry(CountryAddRequest? countryAddRequest);
 
         /// <summary>
         /// Retrieves a list of all countries.
         /// </summary>
         /// <returns> list of  CountryResponse</returns>
-        List<CountryResponse> GetAllCountries();
+        Task<List<CountryResponse>> GetAllCountries();
 
         /// <summary>
         /// gets a country by its unique identifier.
         /// </summary>
         /// <param name="CountryId"></param>
         /// <returns>CountryResponse</returns>
-        CountryResponse GetCountrybyId(Guid? CountryId);
+        Task<CountryResponse> GetCountrybyId(Guid? CountryId);
 
 
 
