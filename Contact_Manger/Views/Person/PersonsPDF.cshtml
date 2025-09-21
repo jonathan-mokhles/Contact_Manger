@@ -2,48 +2,22 @@
 @{
 	Layout = null;
 }
+<link rel="stylesheet" href="@("http://" + Context.Request.Host.ToString() + "/StyleSheet.css")" />
 
-<form action="~/Person/index" method="get">
-    <h1>Person</h1>
-    <a href="~/Person/Create" class="button link-hover margin-auto">Create Person</a>
-
-    <div class="box flex">
-        <div class="flex-1">
-            <select class="form-input" name="searchField">
-                @foreach (string field in ViewBag.SearchFields)
-                {
-                    if (field == ViewBag.SearchField)
-                    {
-                        <option value="@field" selected>@field</option>
-                        continue;
-                    }
-                    <option value="@field">@field</option>
-                }
-            </select>
-        </div>
-        <div class="flex-1">
-            <input type="search" id="Search" class="form-input" name="searchString" placeholder="Search" value="@ViewBag.SearchString" />
-        </div>
-        <div class="flex-1">
-            <button class="button button-blue-back">Search</button>
-            <a href="~/person/index" class="link-hover">Clear all</a>
-        </div>
-    </div>
-
+<h1>Person</h1>
     <div class="table-container">
 
         <table class="table w-100 mt">
             <thead>
                 <tr>
-                    @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "FieldName", "Name" } })
-                    @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "FieldName", "Email" } })
-                    @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "FieldName", "Address" } })
-                    @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "FieldName", "DateOfBirth" } })
-                    @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "FieldName", "Age" } })
-                    @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "FieldName", "Country" } })
-                    @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "FieldName", "Gender" } })
-                    @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "FieldName", "ReceiveNewsLetters" } })
-                    <th>Actions</th>
+				<th >Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>DateOfBirth</th>
+                <th>Age</th>
+                <th>Country</th>
+                <th>Gender</th>
+                <th>ReceiveNewsLetters</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,13 +32,8 @@
                         <td>@person.Country</td>
                         <td>@person.Gender</td>
                         <td>@person.ReceiveNewsLetters</td>
-                        <td>
-                            <a asp-controller="Person" asp-action="Edit" asp-route-personId="@person.Id">Edit</a>
-                            <a asp-controller="Person" asp-action="Delete" asp-route-personId="@person.Id">Delete</a>
-                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-</form>

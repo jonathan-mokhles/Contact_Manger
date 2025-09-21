@@ -5,6 +5,7 @@ using Services;
 using ServicesContracts;
 using ServicesContracts.DTO;
 using ServicesContracts.Enums;
+using Rotativa.AspNetCore;
 
 namespace Contact_Manger.Controllers
 {
@@ -133,6 +134,21 @@ namespace Contact_Manger.Controllers
             }
             await _PersonService.DeletePerson(personId);
             return RedirectToAction("Index", "Person");
+        }
+
+        [Route("PersonsPDF")]
+        public async Task<IActionResult> PersonsPDF(Guid personId)
+        {
+            List<PersonResponse> people = await _PersonService.GetAllPeople();
+
+            return new ViewAsPdf("PersonsPDF",people,ViewData) {
+                PageSize = Rotativa.AspNetCore.Options.Size.A4,
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
+                PageMargins = new Rotativa.AspNetCore.Options.Margins { Left = 10, Right = 10, Top = 10, Bottom = 10 }
+
+
+            };
+
         }
     }
 }
