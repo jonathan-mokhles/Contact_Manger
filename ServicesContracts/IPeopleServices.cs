@@ -70,7 +70,17 @@ namespace ServicesContracts
         /// langword="null"/> if the update could not be performed.</returns>
         public Task<PersonResponse?> UpdatePerson(PersonUpdateRequest? personUpdateRequest);
 
-
+        /// <summary>
+        /// Deletes a person with the specified identifier.
+        /// </summary>
+        /// <remarks>This method performs the deletion operation asynchronously. Ensure the provided
+        /// <paramref name="id"/> corresponds to an existing person.</remarks>
+        /// <param name="id">The unique identifier of the person to delete. Must not be <see langword="null"/>.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result is <see langword="true"/> if the person
+        /// was successfully deleted; otherwise, <see langword="false"/>.</returns>
         public Task<bool> DeletePerson(Guid? id);
+
+        public Task<MemoryStream> GetPersonsCSV();
+
     }
 }

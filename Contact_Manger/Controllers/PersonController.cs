@@ -145,9 +145,16 @@ namespace Contact_Manger.Controllers
                 PageSize = Rotativa.AspNetCore.Options.Size.A4,
                 PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
                 PageMargins = new Rotativa.AspNetCore.Options.Margins { Left = 10, Right = 10, Top = 10, Bottom = 10 }
-
-
             };
+
+        }
+
+        [Route("PersonsCSV")]
+        public async Task<IActionResult> PersonsCSV(Guid personId)
+        {
+           Task<MemoryStream> persons =  _PersonService.GetPersonsCSV();
+
+            return File(persons.Result, "application/octet-stream", "Persons.csv");
 
         }
     }

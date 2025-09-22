@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using CsvHelper;
+using Entities;
 using Services.Helpers;
 using ServicesContracts;
 using ServicesContracts.DTO;
@@ -153,5 +154,20 @@ namespace Services
 
 
         }
+
+        public async Task<MemoryStream> GetPersonsCSV()
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(memoryStream);  
+            CsvWriter csvWriter = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture,leaveOpen:true);
+            csvWriter.WriteHeader<PersonResponse>();
+            csvWriter.NextRecord();
+            List<PersonResponse> people =  _db.SP_GetAllPersons().Select(temp => temp.toPersonResponse()).ToList();
+            await csvWriter.WriteRecordsAsync(people);
+            memoryStream.Position = 0;
+            return memoryStream;
+
+        }
+         
     }
 }
